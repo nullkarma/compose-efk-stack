@@ -1,0 +1,70 @@
+---
+
+version: '3.3'
+services:
+  elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch-platinum:6.1.1
+    container_name: efk_elastic
+    environment:
+      - "ELASTIC_PASSWORD=elastic"
+      - discovery.zen.ping.unicast.hosts=elastic
+      - node.master=true
+      - node.data=true
+      - node.ingest=true
+      - node.name=elastic
+      - cluster.name=oasis
+      - bootstrap.memory_lock=true
+      - http.host=0.0.0.0
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+      - xpack.security.enabled=true
+      - xpack.security.audit.enabled=false
+      - xpack.ml.enabled=true
+      - xpack.watcher.enabled=true
+      - xpack.monitoring.enabled=true
+    volumes:
+      - elastic:/usr/share/elasticsearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    ports:
+      - "9200:9200"
+    networks:
+      - efk_net
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana-x-pack:6.1.1
+    container_name: efk_kibana
+    volumes:
+      - ./configs/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+    ports:
+      - "5601:5601"
+    networks:
+      - efk_net
+
+  fluentd:
+    build:
+      context: build/fluentd
+      dockerfile: Dockerfile
+    image: fluentd:custom
+    container_name: efk_fluentd
+    environment:
+      - FLUENTD_CONF=fluent.conf
+    volumes:
+      - ./logs/input:/var/log/input
+      - ./logs/pos:/var/log/fluentd/pos
+      - ./configs/fluentd:/fluentd/etc
+      - ./configs/fluentd/patterns:/fluentd/custom_patterns
+      - ./configs/elasticsearch/templates:/fluentd/templates
+    networks:
+      - efk_net
+
+volumes:
+  elastic:
+    driver: local
+
+networks:
+  efk_net:
