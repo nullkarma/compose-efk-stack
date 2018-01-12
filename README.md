@@ -1,10 +1,10 @@
 # EFK Stack
 
 
-## fluend
+## fluentd
 Das compose file baut eine neues Fluentd Image aus dem `stable-debian-onbuild` Image und installiert das `elasticsearch`, `concat` und `grok` gem
 
-Neue Logfiles können in das `logs/input` directory gelegt werden. Fluentd configs werden in `./configs/fluentd/conf.d` abgelegt und in der `fluent.conf` nur included.
+Neue Logfiles können in das `./logs/input` directory gelegt werden. Fluentd configs werden in `./configs/fluentd/conf.d` abgelegt und in der `fluent.conf` nur included.
 
 ## elasticsearch
 
