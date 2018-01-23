@@ -44,6 +44,8 @@ services:
       - "5601:5601"
     networks:
       - efk_net
+    depends_on:
+      - elastic
 
   fluentd:
     build:
@@ -53,6 +55,7 @@ services:
     container_name: efk_fluentd
     environment:
       - FLUENTD_CONF=fluent.conf
+      - ELASTICSEARCH=elastic
     volumes:
       - ./logs/input:/var/log/input
       - ./logs/pos:/var/log/fluentd/pos
@@ -61,6 +64,9 @@ services:
       - ./configs/elasticsearch/templates:/fluentd/templates
     networks:
       - efk_net
+    depends_on:
+      - elastic
+        #command: ["./wait-for-elastic.sh", "elastic", "fluent.conf", ""]
 
 volumes:
   elastic:

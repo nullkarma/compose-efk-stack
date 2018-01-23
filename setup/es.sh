@@ -17,6 +17,10 @@ curl -s -H "Content-Type: application/json" -u elastic:elastic http://127.0.0.1:
 DATA
 
 echo
+username=${username:-demouser}
+password=${password:-demouser}
+email=${email:-demo@example.com}
+
 echo "create user $username"
 
 curl -s -X POST -H "Content-Type: application/json" -u elastic:elastic http://127.0.0.1:9200/_xpack/security/user/$username -d @- <<DATA
@@ -36,6 +40,10 @@ echo "create fluentd role"
 
 curl -s -X POST -H "Content-Type: application/json" -u elastic:elastic http://127.0.0.1:9200/_xpack/security/role/fluentd_system -d @- <<DATA
 {
+    "cluster": [
+        "manage_index_templates",
+        "monitor"
+    ],
     "indices": [
         {
             "names": ["*"],
