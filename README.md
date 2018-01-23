@@ -22,11 +22,11 @@ Werden keine Parameter übergeben, erstellt das Script den User `demouser` mit g
 ```
 
 
-##### Cluster Privileges
+##### fluentd Cluster Privileges
 
 - monitor
 
-##### Index Privileges
+##### fluentd Index Privileges
 
 - create_index
 - index
