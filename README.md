@@ -25,6 +25,7 @@ Werden keine Parameter übergeben, erstellt das Script den User `demouser` mit g
 ##### fluentd Cluster Privileges
 
 - monitor
+- manage_index_templates
 
 ##### fluentd Index Privileges
 
