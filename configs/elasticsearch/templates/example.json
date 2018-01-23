@@ -1,0 +1,23 @@
+{
+    "index_patterns": ["example-*"],
+    "settings": {
+        "number_of_shards": 1,
+        "number_of_replicas": 0
+    },
+    "mappings": {
+        "logs": {
+            "properties": {
+                "logstamp": {
+                    "type": "keyword"
+                },
+                "level": {
+                    "type": "keyword"
+                },
+                "msg": {
+                    "type": "text"
+                }
+            }
+        }
+    }
+}
+
