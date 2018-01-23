@@ -8,7 +8,8 @@
         "logs": {
             "properties": {
                 "logstamp": {
-                    "type": "keyword"
+                    "type": "date",
+                    "format": "date_time_no_millis"
                 },
                 "level": {
                     "type": "keyword"
