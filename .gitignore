@@ -1,2 +1,4 @@
 .DS_Store
-logs/pos
+logs/input/buffer.log
+logs/input/ingest.log
+*.log.pos

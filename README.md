@@ -43,3 +43,17 @@ docker-compose build fluentd
 ```
 
 Der Fluentd Container wird über eine Wrapperscript gestartet, dass auf die Elasticsearch API Verfügbarkeit wartet. Fluentd startet somit erst, wenn das `es.sh` Script aufgerufen und der fluentd User angelegt wurde.
+
+## Test Cases
+
+### Buffering
+
+```bash
+while True; do echo "$(date +%Y-%m-%dT%H:%M:%S%z) INFO Random text" | tee -a logs/input/buffer.log; sleep 2; done
+```
+
+### Data Ingestion
+
+```bash
+while True; do echo "$(date +%Y-%m-%dT%H:%M:%S%z) INFO Random text" | tee -a logs/input/ingest.log; sleep 2; done
+```

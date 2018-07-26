@@ -1,0 +1,13 @@
+{
+    "description": "Demo pipeline",
+    "processors": [
+        {
+            "grok": {
+                "field": "message",
+                "patterns": [
+                    "^%{TIMESTAMP_ISO8601:logstamp} %{WORD:level} %{GREEDYDATA:msg}$"
+                ]
+            }
+        }
+    ]
+}

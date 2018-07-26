@@ -66,7 +66,6 @@ services:
       - efk_net
     depends_on:
       - elastic
-        #command: ["./wait-for-elastic.sh", "elastic", "fluent.conf", ""]
 
 volumes:
   elastic:
