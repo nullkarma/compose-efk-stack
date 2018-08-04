@@ -20,7 +20,7 @@ The elasticsearch Container is build from the `elasticsearch-premium` image and 
 
 #### x-pack (setup)
 
-Since 6.x default Passwörter for elastic, kibana and logstash are not set. The elastic superuser Account password is set to `elastic` throuh ENV vars in the compose file.
+Since 6.x default passwords for elastic, kibana and logstash are not set. The elastic superuser Account password is set to `elastic` throuh ENV vars in the compose file.
 
 In oder to work with Kibana, fluentd and a custom user, the `./setup/es.sh` script has to be called. If no parameters are given, the script will create the default user `demouser` and set the password to `demouser`.
 
