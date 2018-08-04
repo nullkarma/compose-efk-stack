@@ -4,18 +4,25 @@
 ## Containers
 
 ### fluentd
-Das Composefile baut eine neues Fluentd Image aus dem `stable-debian-onbuild` Image und installiert das `elasticsearch`, `concat` und `grok` gem.
-Neue Logfiles können in das `./logs/input` directory gelegt werden. Fluentd configs werden in `./configs/fluentd/conf.d` abgelegt und in der `fluent.conf` nur included.
+
+#### Gems 
+
+- `elasticsearch`
+- `concat`
+- `grok`
+
+#### Configs & parsing logs
+Logfiles can be placed inside the `./logs/input` directory. Fluentd configs are located in `./configs/fluentd/conf.d` and can be included in `fluent.conf`.
 
 ### elasticsearch
 
-Der elasticsearch Container wird aus dem `elasticsearch-premium` image erstellt und hat alle x-pack features enabled. Audit logs sind allerdings disabled.
+The elasticsearch Container is build from the `elasticsearch-premium` image and has all x-pack features enabled. Audit logging is disabled.
 
 #### x-pack (setup)
 
-Seit 6.x sind die default Passwörter für elastic, kibana und logstash nicht gesetzt. Das Passwort des elastic superuser Accounts wird über die ENV vars in compose file auf `elastic` gesetzt.
-Um mit Kibana, fluentd und einem eigenen User arbeiten zü können, muss das Script `./setup/es.sh` aufgerufen werden.
-Werden keine Parameter übergeben, erstellt das Script den User `demouser` mit gleichnamigem Passwort.
+Since 6.x default Passwörter for elastic, kibana and logstash are not set. The elastic superuser Account password is set to `elastic` throuh ENV vars in the compose file.
+
+In oder to work with Kibana, fluentd and a custom user, the `./setup/es.sh` script has to be called. If no parameters are given, the script will create the default user `demouser` and set the password to `demouser`.
 
 ```bash
 ./setup/es.sh -u username -p password -e user@mail.foo
@@ -32,17 +39,17 @@ Werden keine Parameter übergeben, erstellt das Script den User `demouser` mit g
 - create_index
 - index
 
-Siehe [Security Privileges](https://www.elastic.co/guide/en/x-pack/current/security-privileges.html)
+See [Security Privileges](https://www.elastic.co/guide/en/x-pack/current/security-privileges.html)
 
 ## Startup
 
-### Fluentd Container bauen
+### Building the Fluentd Container
 
 ```bash
 docker-compose build fluentd
 ```
 
-Der Fluentd Container wird über eine Wrapperscript gestartet, dass auf die Elasticsearch API Verfügbarkeit wartet. Fluentd startet somit erst, wenn das `es.sh` Script aufgerufen und der fluentd User angelegt wurde.
+The `es.sh` setup script has to be called in order to create the fluentd user. Otherwise fluentd will _not_ start up. It'll wait until the elasticsearch API is available.
 
 ## Test Cases
 
