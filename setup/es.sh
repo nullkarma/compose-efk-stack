@@ -1,10 +1,15 @@
 #!/bin/bash
 
-while getopts ":u:p:e:" opt; do
+function usage {
+    echo "$0 -u username -p password -e email_addr"
+}
+
+while getopts ":u:p:e:h" opt; do
     case $opt in
         u) username=$OPTARG ;;
         p) password=$OPTARG ;;
         e) email=$OPTARG ;;
+        h) usage; exit ;;
     esac
 done
 
