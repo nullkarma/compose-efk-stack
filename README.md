@@ -62,5 +62,9 @@ while True; do echo "$(date +%Y-%m-%dT%H:%M:%S%z) INFO Random text" | tee -a log
 ### Data Ingestion
 
 ```bash
+curl -u demouser:demouser http://127.0.0.1:9200/_ingest/pipeline/demo -X PUT -H 'Content-Type: application/json' --data-binary @configs/elasticsearch/pipelines/demo.json
+```
+
+```bash
 while True; do echo "$(date +%Y-%m-%dT%H:%M:%S%z) INFO Random text" | tee -a logs/input/ingest.log; sleep 2; done
 ```
